@@ -37,7 +37,7 @@ module testbench_xN;
        
        a = 64'b1111111111111111111111111111111111111111111111111111111111111111;
        b = 64'b1111111111111111111111111111111111111111111111111111111111111111;
-       cin = 1'b0;
+       cin = 1'b1;
        #10; // Esperar un tiempo después de establecer las entradas
 
        // Mostrar los valores de entrada
