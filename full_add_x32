@@ -1,0 +1,24 @@
+`timescale 1ns / 1ps
+
+module full_add_x32 (
+    input logic [31:0] a, b,
+    input logic cin,
+    output logic [31:0] sum,
+    output logic cout
+);
+
+    logic [15:0] sum_0, sum_1;
+    logic cout_0;
+    
+    // Instancias de sumador de 16 bits para los bits menos significativos
+    full_add_x16 full_add_x16_inst0 (.a(a[15:0]), .b(b[15:0]), .cin(cin), .sum(sum_0), .cout(cout_0)); 
+    
+    // Instancias de sumador de 16 bits para los bits más significativos
+    full_add_x16 full_add_x16_inst1 (.a(a[31:16]), .b(b[31:16]), .cin(cout_0), .sum(sum_1), .cout(cout));
+    
+    // Combinar las sumas de los sumadores de 16 bits
+    assign sum = {sum_1, sum_0};
+    
+endmodule
+
+
