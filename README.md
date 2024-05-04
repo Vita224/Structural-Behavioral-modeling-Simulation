@@ -35,7 +35,7 @@ Y por último en nuestra operación final, ingresamos el valor máximo posible, 
 Imagen 6. Cuarto cálculo en base binaria<br><br>
 
 ---
-Desarrolado por Vitalino Guerra (091-19-1394) 😊
+Desarrollado por Vitalino Guerra (091-19-1394) 😊
 
 
 
