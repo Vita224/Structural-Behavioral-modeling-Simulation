@@ -1,0 +1,14 @@
+`timescale 1ns / 1ps
+
+module full_add_x2 (
+    input logic [1:0] a, b,
+    input logic cin,
+    output logic [1:0] sum,
+    output logic cout
+);
+    // full adder para el bit menos significativo
+    full_add_x1 full_add_x1_inst0 (.a(a[0]), .b(b[0]), .cin(cin), .sum(sum[0]), .cout(cout)); 
+    // full adder para el bit más significativo
+    full_add_x1 full_add_x1_inst1 (.a(a[1]), .b(b[1]), .cin(full_add_x1_inst0.cout), .sum(sum[1]), .cout(cout)); 
+
+endmodule
