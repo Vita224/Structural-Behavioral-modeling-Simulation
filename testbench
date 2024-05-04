@@ -1,0 +1,62 @@
+`timescale 1ns / 1ps
+
+module testbench_xN;
+   // Definir los puertos del módulo under test (UUT)
+   logic [63:0] a;
+   logic [63:0] b;
+   logic cin;
+   logic [63:0] sum;
+   logic cout;
+   
+   // Instanciar el UUT
+   full_add_x64 uut (
+       .a(a),
+       .b(b),
+       .cin(cin),
+       .sum(sum),
+       .cout(cout)
+   );
+   
+   // Generar estímulos
+   initial begin
+       // Inicializar valores de entrada
+       a = 64'b101010100000;
+       b = 64'b000011001100;
+       cin = 1'b0;
+       #10; // Esperar un tiempo después de establecer las entradas
+       
+       a = 64'b1000;
+       b = 64'b0001;
+       cin = 1'b0;
+       #10; // Esperar un tiempo después de establecer las entradas
+       
+       a = 64'b101010101010101010101010;
+       b = 64'b010101010101010101010101;
+       cin = 1'b0;
+       #10; // Esperar un tiempo después de establecer las entradas
+       
+       a = 64'b1111111111111111111111111111111111111111111111111111111111111111;
+       b = 64'b1111111111111111111111111111111111111111111111111111111111111111;
+       cin = 1'b0;
+       #10; // Esperar un tiempo después de establecer las entradas
+
+       // Mostrar los valores de entrada
+       $display("Valores de entrada: a = %b, b = %b, cin = %b", a, b, cin);
+       
+       // Realizar operaciones adicionales para verificar el funcionamiento del sumador
+       assert(sum === a + b + cin) // Asegurar que la suma es correcta
+           $error("Error: La suma no es correcta");
+       
+       assert(sum[63:32] === (a[63:32] + b[63:32] + cin)) // Asegurar que la suma de los bits más significativos es correcta
+           $error("Error: La suma de los bits más significativos no es correcta");
+       
+       assert(sum[31:0] === (a[31:0] + b[31:0] + cin)) // Asegurar que la suma de los bits menos significativos es correcta
+           $error("Error: La suma de los bits menos significativos no es correcta");
+
+       // Mostrar los valores de salida
+       $display("Valores de salida: sum = %b, cout = %b", sum, cout);
+       
+       // Finalizar la simulación
+       $finish;
+   end
+endmodule
