@@ -1,0 +1,22 @@
+`timescale 1ns / 1ps
+
+module full_add_x4 (
+    input logic [3:0] a, b,
+    input logic cin,
+    output logic [3:0] sum,
+    output logic cout
+);
+
+    logic [1:0] sum_0, sum_1;
+    logic cout_0;
+    
+    // Sumador de 2 bits para los bits menos significativos
+    full_add_x2 full_add_x2_inst0 (.a(a[1:0]), .b(b[1:0]), .cin(cin), .sum(sum_0), .cout(cout_0)); 
+    
+    // Sumador de 2 bits para los bits más significativos
+    full_add_x2 full_add_x2_inst1 (.a(a[3:2]), .b(b[3:2]), .cin(cout_0), .sum(sum_1), .cout(cout));
+    
+    // Combinar las sumas de los sumadores de 2 bits
+    assign sum = {sum_1, sum_0};
+    
+endmodule
